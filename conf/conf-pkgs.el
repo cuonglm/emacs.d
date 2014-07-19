@@ -37,10 +37,10 @@
 (setq ac-auto-show-menu 1)
 (setq ac-ignore-case nil)
 
-;; use C-n, C-p to select
-;;(setq ac-use-menu-map t)
-(define-key ac-menu-map "\C-n" 'ac-next)
-(define-key ac-menu-map "\C-p" 'ac-previous)
+;; use M-n, M-p to select
+(setq ac-use-menu-map t)
+(define-key ac-menu-map "\M-n" 'ac-next)
+(define-key ac-menu-map "\M-p" 'ac-previous)
 
 ;; undo-tree
 (global-undo-tree-mode)
