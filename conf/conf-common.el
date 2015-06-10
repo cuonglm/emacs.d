@@ -21,4 +21,11 @@
            (setcdr pair 'cperl-mode)))
      (append auto-mode-alist interpreter-mode-alist))
 
+;; Enable clipboard
+(setq x-select-enable-clipboard t)
+
+;; Enable ido-mode
+(require 'ido)
+(ido-mode t)
+
 (provide 'conf-common)

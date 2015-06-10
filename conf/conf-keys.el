@@ -14,6 +14,9 @@
 (global-set-key (kbd "\C-w") 'backward-kill-word)
 
 ;; C-c h for help command
-(global-set-key (kbd "\C-ch") 'help-command)
+(global-set-key (kbd "\C-c h") 'help-command)
+
+;; C-x C-b as ibuffer
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (provide 'conf-keys)

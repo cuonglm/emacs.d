@@ -65,4 +65,10 @@
               (setq ac-sources
                     '(ac-source-perl-completion)))))
 
+;; doc-view continuous mode
+(setq doc-view-continuous t)
+
+;; erc
+(require 'erc)
+
 (provide 'conf-pkgs)
