@@ -13,6 +13,46 @@
 ;; Jedi
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
+(defvar jedi:goto-stack '())
+(defun jedi:jump-to-definition ()
+  (interactive)
+  (add-to-list 'jedi:goto-stack
+               (list (buffer-name) (point)))
+  (jedi:goto-definition))
+(defun jedi:jump-back ()
+  (interactive)
+  (let ((p (pop jedi:goto-stack)))
+    (if p (progn
+            (switch-to-buffer (nth 0 p))
+            (goto-char (nth 1 p))))))
+
+(add-hook 'python-mode-hook
+  (lambda ()
+	;; _ as a word separator
+	(modify-syntax-entry ?_ "_" python-mode-syntax-table)
+	;; comment region function
+	(local-set-key (kbd "C-c ;") 'comment-region)
+	;; python tab-width
+	(setq python-indent-offset 4)
+	(setq tab-width 4)
+    (local-set-key (kbd "C-.") 'jedi:jump-to-definition)
+    (local-set-key (kbd "C-,") 'jedi:jump-back)
+    (local-set-key (kbd "C-c d") 'jedi:show-doc)))
+
+(require 'python-mode)
+; use IPython
+(setq-default py-shell-name "ipython")
+(setq-default py-which-bufname "IPython")
+(setq py-force-py-shell-name-p t)
+(setq py-python-command-args '("-colors" "Linux"))
+; switch to the interpreter after executing code
+(setq py-shell-switch-buffers-on-execute-p t)
+(setq py-switch-buffers-on-execute-p t)
+; don't split windows
+(setq py-split-windows-on-execute-p nil)
+(add-hook 'python-mode-hook
+  (lambda ()
+    (local-set-key (kbd "C-c i") 'py-shell)))
 
 ;; flycheck
 (require 'flycheck)
@@ -70,5 +110,20 @@
 
 ;; erc
 (require 'erc)
+
+;; fill column indicator
+(require 'fill-column-indicator)
+(add-hook 'after-change-major-mode-hook 'fci-mode)
+(setq fci-rule-color "LightSlateBlue")
+(setq-default fci-rule-column 80)
+(setq fci-handle-truncate-lines t)
+
+;; sh-mode identation
+(add-hook 'sh-mode-hook
+  (lambda ()
+    (setq sh-basic-offset 2)
+    (setq sh-indentation 2)
+    (setq tab-width 2)
+    (define-key sh-mode-map (kbd "RET") 'reindent-then-newline-and-indent)))
 
 (provide 'conf-pkgs)
