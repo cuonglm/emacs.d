@@ -61,6 +61,7 @@
 (add-hook 'python-mode-hook 'flycheck-mode)
 (add-hook 'cperl-mode-hook 'flycheck-mode)
 (add-hook 'sh-mode-hook 'flycheck-mode)
+(add-hook 'sh-mode-hook (lambda () (flycheck-select-checker 'sh-shellcheck)))
 
 ;; auto-complete
 (require 'auto-complete-config)
