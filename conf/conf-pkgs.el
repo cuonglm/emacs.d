@@ -130,4 +130,19 @@
 ;; lisp indent
 (setq lisp-body-indent 2)
 
+;; neotree
+(require 'neotree)
+(global-set-key [f1] 'neotree-toggle)
+
+;; saveplace
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file "~/.emacs.d/saved-places")
+
+;; projectile + helm
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+(setq projectile-enable-caching t)
+
 (provide 'conf-pkgs)
