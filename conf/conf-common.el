@@ -16,10 +16,10 @@
 
 ;; cperl-mode is preferred to perl-mode
 (mapc
-     (lambda (pair)
-       (if (eq (cdr pair) 'perl-mode)
-           (setcdr pair 'cperl-mode)))
-     (append auto-mode-alist interpreter-mode-alist))
+ (lambda (pair)
+   (if (eq (cdr pair) 'perl-mode)
+       (setcdr pair 'cperl-mode)))
+ (append auto-mode-alist interpreter-mode-alist))
 
 ;; Enable clipboard
 (setq x-select-enable-clipboard t)

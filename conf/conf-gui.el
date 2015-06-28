@@ -11,19 +11,25 @@
 ;; Show column
 (setq column-number-mode t)
 
-;; turn off scrollbar
+;; Turn off scrollbar
 (scroll-bar-mode -1)
 
-;; turn off menubar
+;; Turn off menubar
 (menu-bar-mode -1)
 
-;; turn off toolbar
+;; Turn off toolbar
 (tool-bar-mode -1)
 
-;; set tab width 4 spaces
+;; Set tab width 4 spaces
 (setq-default tab-width 4)
 
 ;; Show keystrokes
 (setq echo-keystrokes 0.02)
+
+;; Show buffer name in title bar
+(setq frame-title-format "%b")
+
+;; Highlight current line
+(global-hl-line-mode 1)
 
 (provide 'conf-gui)

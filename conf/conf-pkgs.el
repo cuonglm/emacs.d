@@ -12,7 +12,7 @@
 
 ;; Jedi
 (add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
+(setq jedi:complete-on-dot nil)
 (defvar jedi:goto-stack '())
 (defun jedi:jump-to-definition ()
   (interactive)
@@ -75,7 +75,7 @@
 (ac-config-default)
 (global-auto-complete-mode t)
 (auto-complete-mode t)
-(setq ac-auto-show-menu 1)
+(setq ac-auto-show-menu t)
 (setq ac-ignore-case nil)
 
 ;; use M-n, M-p to select
@@ -126,5 +126,8 @@
     (setq sh-indentation 2)
     (setq tab-width 2)
     (define-key sh-mode-map (kbd "RET") 'reindent-then-newline-and-indent)))
+
+;; lisp indent
+(setq lisp-body-indent 2)
 
 (provide 'conf-pkgs)
