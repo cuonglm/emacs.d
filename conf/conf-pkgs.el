@@ -39,6 +39,7 @@
     (local-set-key (kbd "C-,") 'jedi:jump-back)
     (local-set-key (kbd "C-c d") 'jedi:show-doc)))
 
+(setq py-install-directory (concat "~/.emacs.d/.cask/" emacs-version "/elpa/python-mode-*"))
 (require 'python-mode)
 ; use IPython
 (setq-default py-shell-name "ipython")
