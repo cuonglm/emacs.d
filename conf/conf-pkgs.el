@@ -28,13 +28,19 @@
 
 (add-hook 'python-mode-hook
   (lambda ()
-	;; _ as a word separator
-	(modify-syntax-entry ?_ "_" python-mode-syntax-table)
-	;; comment region function
-	(local-set-key (kbd "C-c ;") 'comment-region)
-	;; python tab-width
-	(setq python-indent-offset 4)
-	(setq tab-width 4)
+    ;; fill column indicator
+    (require 'fill-column-indicator)
+    (add-hook 'after-change-major-mode-hook 'fci-mode)
+    (setq fci-rule-color "LightSlateBlue")
+    (setq-default fci-rule-column 80)
+    (setq fci-handle-truncate-lines t)
+    ;; _ as a word separator
+    (modify-syntax-entry ?_ "_" python-mode-syntax-table)
+    ;; comment region function
+    (local-set-key (kbd "C-c ;") 'comment-region)
+    ;; python tab-width
+    (setq python-indent-offset 4)
+    (setq tab-width 4)
     (local-set-key (kbd "C-.") 'jedi:jump-to-definition)
     (local-set-key (kbd "C-,") 'jedi:jump-back)
     (local-set-key (kbd "C-c d") 'jedi:show-doc)))
@@ -112,13 +118,6 @@
 
 ;; erc
 (require 'erc)
-
-;; fill column indicator
-(require 'fill-column-indicator)
-(add-hook 'after-change-major-mode-hook 'fci-mode)
-(setq fci-rule-color "LightSlateBlue")
-(setq-default fci-rule-column 80)
-(setq fci-handle-truncate-lines t)
 
 ;; sh-mode identation
 (add-hook 'sh-mode-hook
