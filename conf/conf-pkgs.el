@@ -97,21 +97,22 @@
 (require 'ack-and-a-half)
 
 ;; perl-completion
-(require 'perl-completion)
-(global-set-key (kbd "C-M-p") 'plcmp-cmd-complete-all)
-
 (add-hook 'cperl-mode-hook
           (lambda()
             (require 'perl-completion)
-            (perl-completion-mode t)))
-
-(add-hook 'cperl-mode-hook
-          (lambda ()
+            (perl-completion-mode t)
+            (global-set-key (kbd "C-M-p") 'plcmp-cmd-complete-all)
             (when (require 'auto-complete nil t) ; no error whatever auto-complete.el is not installed.
               (auto-complete-mode t)
               (make-variable-buffer-local 'ac-sources)
               (setq ac-sources
-                    '(ac-source-perl-completion)))))
+                    '(ac-source-perl-completion)))
+            (setq cperl-indent-level 4
+              cperl-close-paren-offset -4
+              cperl-continued-statement-offset 4
+              cperl-tab-always-indent t
+              cperl-indent-parens-as-block t
+              perl-indent-parens-as-block t)))
 
 ;; doc-view continuous mode
 (setq doc-view-continuous t)
