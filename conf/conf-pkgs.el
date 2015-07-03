@@ -32,7 +32,7 @@
     (require 'fill-column-indicator)
     (add-hook 'after-change-major-mode-hook 'fci-mode)
     (setq fci-rule-color "LightSlateBlue")
-    (setq-default fci-rule-column 80)
+    (setq-default fci-rule-column 79)
     (setq fci-handle-truncate-lines t)
     ;; _ as a word separator
     (modify-syntax-entry ?_ "_" python-mode-syntax-table)
