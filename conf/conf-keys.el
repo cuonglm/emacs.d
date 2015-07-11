@@ -8,13 +8,16 @@
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;; C-h as backspace
-(setf (global-key-binding (kbd "\C-h")) (kbd "<backspace>"))
+(setf (global-key-binding (kbd "C-h")) (kbd "<backspace>"))
 
-;; C-w like bash-command-line
-(global-set-key (kbd "\C-w") 'backward-kill-word)
+;; C-w to kill word backward
+(global-set-key (kbd "C-w") 'backward-kill-word)
+
+;; C-c C-w to kill region
+(global-set-key (kbd "C-c C-w") 'kill-region)
 
 ;; C-c h for help command
-(global-set-key (kbd "\C-c h") 'help-command)
+(global-set-key (kbd "C-c h") 'help-command)
 
 ;; C-x C-b as ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)

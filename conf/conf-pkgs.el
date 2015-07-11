@@ -41,6 +41,7 @@
     ;; python tab-width
     (setq python-indent-offset 4)
     (setq tab-width 4)
+    (local-set-key (kbd "C-c i") 'py-shell)
     (local-set-key (kbd "C-.") 'jedi:jump-to-definition)
     (local-set-key (kbd "C-,") 'jedi:jump-back)
     (local-set-key (kbd "C-c d") 'jedi:show-doc)))
@@ -57,9 +58,6 @@
 (setq py-switch-buffers-on-execute-p t)
 ; don't split windows
 (setq py-split-windows-on-execute-p nil)
-(add-hook 'python-mode-hook
-  (lambda ()
-    (local-set-key (kbd "C-c i") 'py-shell)))
 
 ;; flycheck
 (require 'flycheck)
