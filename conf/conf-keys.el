@@ -14,7 +14,7 @@
 (global-set-key (kbd "C-w") 'backward-kill-word)
 
 ;; C-c C-w to kill region
-(global-set-key (kbd "C-c C-w") 'kill-region)
+(global-set-key (kbd "C-x C-w") 'kill-region)
 
 ;; C-c h for help command
 (global-set-key (kbd "C-c h") 'help-command)
