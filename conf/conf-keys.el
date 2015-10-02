@@ -22,4 +22,7 @@
 ;; C-x C-b as ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;; Using helm-m-x
+(global-set-key (kbd "M-x") 'helm-M-x)
+
 (provide 'conf-keys)
