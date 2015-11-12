@@ -6,6 +6,7 @@
 ;; Sync Cask file with package install via M-x list-package
 ;; https://github.com/rdallasgray/pallet
 (require 'pallet)
+(pallet-mode t)
 
 ;; Use Solarized theme
 (load-theme 'solarized-light t)
