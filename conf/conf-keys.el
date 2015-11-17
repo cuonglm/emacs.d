@@ -25,4 +25,7 @@
 ;; Using helm-m-x
 (global-set-key (kbd "M-x") 'helm-M-x)
 
+;; Using helm-find-files
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+
 (provide 'conf-keys)
