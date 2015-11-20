@@ -27,7 +27,11 @@
 (setq echo-keystrokes 0.02)
 
 ;; Show buffer name in title bar
-(setq frame-title-format "%b")
+(setq frame-title-format "%f")
+
+;; Uniquify style
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse)
 
 ;; Highlight current line
 (global-hl-line-mode 1)
