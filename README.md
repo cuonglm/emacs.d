@@ -1,4 +1,4 @@
 My Emacs configuration and packages management
 
- - Adding packages to Cask file
- - Run install.sh
+ - Run `sudo make deps` to install dependencies
+ - Start emacs and wait for packages installation
