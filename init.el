@@ -101,8 +101,6 @@
 ;; C-x C-b as ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;
 ;; Packages config ;;
 ;;;;;;;;;;;;;;;;;;;;;
@@ -289,6 +287,25 @@
 ;; Elixir
 (use-package elixir-mode
   :ensure t)
+
+;; helm-gtags
+(use-package helm-gtags
+  :ensure t
+  :bind (("C-c g a" . helm-gtags-tags-in-this-function)
+         ("C-j" . helm-gtags-select)
+         ("M-." . helm-gtags-dwim)
+         ("M-," . helm-gtags-pop-stack)
+         ("C-c <" . helm-gtags-previous-historu)
+         ("C-c >" . helm-gtags-next-history))
+  :config
+  (setq helm-gtags-ignore-case t
+        helm-gtags-auto-update t
+        helm-gtags-use-input-at-cursor t
+        helm-gtags-pulse-at-cursor t
+        helm-gtags-prefix-key "\C-cg"
+        helm-gtags-suggested-key-mapping t)
+  (add-hook 'c-mode-hook 'helm-gtags-mode)
+  (add-hook 'c++-mode-hook 'helm-gtags-mode))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;

@@ -4,4 +4,4 @@ help:
 deps:
 	easy_install pip && \
 	pip install -r python_requirements.txt && \
-	apt-get install clang
+	apt-get install clang shellcheck
