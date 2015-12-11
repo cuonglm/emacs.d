@@ -14,6 +14,7 @@
 (eval-when-compile
   (require 'use-package))
 (require 'bind-key)
+(require 'diminish)
 
 ;;;;;;;;;;;;;;;;;;;
 ;; Common config ;;
@@ -100,11 +101,7 @@
 ;; C-x C-b as ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;; Using helm-m-x
-(global-set-key (kbd "M-x") 'helm-M-x)
 
-;; Using helm-find-files
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
 
 ;;;;;;;;;;;;;;;;;;;;;
 ;; Packages config ;;
@@ -163,6 +160,7 @@
 ;; undo-tree
 (use-package undo-tree
   :ensure t
+  :diminish undo-tree-mode
   :config
   (global-undo-tree-mode))
 
@@ -173,22 +171,22 @@
 ;; perl-completion
 (use-package perl-completion
   :ensure t
+  :bind ("C-M-p" . plcmp-cmd-complete-all)
   :config
-  (perl-completion-mode t)
   (add-hook 'cperl-mode-hook
             (lambda()
-              (global-set-key (kbd "C-M-p") 'plcmp-cmd-complete-all)
+              (perl-completion-mode t)
               (when (require 'auto-complete nil t) ; no error whatever auto-complete.el is not installed.
                 (auto-complete-mode t)
                 (make-variable-buffer-local 'ac-sources)
                 (setq ac-sources
                     '(ac-source-perl-completion)))
               (setq cperl-indent-level 4
-                cperl-close-paren-offset -4
-                cperl-continued-statement-offset 4
-                cperl-tab-always-indent t
-                cperl-indent-parens-as-block t
-                perl-indent-parens-as-block t))))
+                    cperl-close-paren-offset -4
+                    cperl-continued-statement-offset 4
+                    cperl-tab-always-indent t
+                    cperl-indent-parens-as-block t
+                    perl-indent-parens-as-block t))))
 
 ;; neo tree
 (use-package neotree
@@ -201,6 +199,8 @@
   :config
   (use-package helm-projectile
     :ensure t
+    :bind (("M-x" . helm-M-x)
+           ("C-x C-f" . helm-find-files))
     :config
     (helm-projectile-on))
   (projectile-global-mode)
@@ -230,6 +230,7 @@
 ;; company
 (use-package company
   :ensure t
+  :diminish company-mode
   :bind ("M-." . company-complete-common)
   :config
   (add-hook 'after-init-hook 'global-company-mode)
@@ -285,6 +286,10 @@
   :config
   (add-hook 'yaml-mode-hook '(lambda () (ansible t))))
 
+;; Elixir
+(use-package elixir-mode
+  :ensure t)
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
 ;;;;;;;;;;;;;;;;;;;;
@@ -301,4 +306,3 @@
 (add-hook 'emacs-lisp-mode-hook
   (lambda ()
     (setq lisp-body-indent 2)))
-
