@@ -77,7 +77,10 @@
 (setq frame-title-format "%f")
 
 ;; Highlight current line
-(global-hl-line-mode 1)
+(global-hl-line-mode t)
+
+;; Show paren mode
+(show-paren-mode t)
 
 ;;;;;;;;;;;;;;;;;
 ;; Key binding ;;
@@ -134,6 +137,12 @@
 ;; erc
 (use-package erc)
 
+;; exec-path-from-shell
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
 ;; anything
 (use-package anything
   :ensure t)
@@ -153,7 +162,12 @@
   (add-hook 'python-mode-hook 'flycheck-mode)
   (add-hook 'cperl-mode-hook 'flycheck-mode)
   (add-hook 'sh-mode-hook 'flycheck-mode)
-  (add-hook 'sh-mode-hook (lambda () (flycheck-select-checker 'sh-shellcheck))))
+  (add-hook 'sh-mode-hook (lambda () (flycheck-select-checker 'sh-shellcheck)))
+  (add-hook 'go-mode-hook 'flycheck-mode)
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (flycheck-select-checker 'go-golint)
+              (setq flycheck-disabled-checkers '(go-build)))))
 
 ;; undo-tree
 (use-package undo-tree
@@ -229,7 +243,7 @@
 (use-package company
   :ensure t
   :diminish company-mode
-  :bind ("M-." . company-complete-common)
+  :bind ("M-/" . company-complete-common)
   :config
   (add-hook 'after-init-hook 'global-company-mode)
   (add-to-list 'company-backends 'company-c-headers)
@@ -241,7 +255,7 @@
 (use-package elpy
   :ensure t
   :init (with-eval-after-load 'python (elpy-enable))
-  :bind ("C-c M-c" . elpy-shell-switch-to-shell)
+  :bind ("M-," . pop-tag-mark)
   :config
   (elpy-use-ipython)
   ;; fill column indicator
@@ -252,23 +266,9 @@
     (setq fci-rule-color "LightSlateBlue")
     (setq-default fci-rule-column 79)
     (setq fci-handle-truncate-lines t))
-  ;; Use a stack for jump to/back definition
-  (defvar elpy-goto-stack '())
-  (defun elpy-jump-to-definition ()
-    (interactive)
-    (add-to-list 'elpy-goto-stack
-                 (point-marker))
-    (elpy-goto-definition))
-  (defun elpy-jump-back ()
-    (interactive)
-    (let ((p (pop elpy-goto-stack)))
-      (if p (progn
-              (switch-to-buffer (marker-buffer p))
-              (goto-char p)))))
   (add-hook 'elpy-mode-hook
             (lambda ()
-              (local-set-key (kbd "M-.") 'elpy-jump-to-definition)
-              (local-set-key (kbd "M-,") 'elpy-jump-back))))
+              (local-set-key (kbd "C-c M-c") 'elpy-shell-switch-to-shell))))
 
 ;; jinja2
 (use-package jinja2-mode
@@ -291,12 +291,7 @@
 ;; helm-gtags
 (use-package helm-gtags
   :ensure t
-  :bind (("C-c g a" . helm-gtags-tags-in-this-function)
-         ("C-j" . helm-gtags-select)
-         ("M-." . helm-gtags-dwim)
-         ("M-," . helm-gtags-pop-stack)
-         ("C-c <" . helm-gtags-previous-historu)
-         ("C-c >" . helm-gtags-next-history))
+  :diminish helm-gtags-mode
   :config
   (setq helm-gtags-ignore-case t
         helm-gtags-auto-update t
@@ -305,7 +300,25 @@
         helm-gtags-prefix-key "\C-cg"
         helm-gtags-suggested-key-mapping t)
   (add-hook 'c-mode-hook 'helm-gtags-mode)
-  (add-hook 'c++-mode-hook 'helm-gtags-mode))
+  (add-hook 'c++-mode-hook 'helm-gtags-mode)
+  (eval-after-load "helm-gtags"
+    '(progn
+       (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+       (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+       (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+       (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+       (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-histor)
+       (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history))))
+
+;; go-mode
+(use-package go-mode
+  :ensure t
+  :config
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (local-set-key (kbd "M-.") 'godef-jump)
+              (local-set-key (kbd "C-c C-c d") 'godoc-at-point))))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;

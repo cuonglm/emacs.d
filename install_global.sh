@@ -2,6 +2,14 @@
 
 set -eu
 
+has_command() {
+  command -v "$1"
+} >/dev/null 2>&1
+
+msg() {
+  printf >&2 '%s\n' "$@"
+}
+
 GLOBAL_URL='http://tamacom.com/global/global-6.5.1.tar.gz'
 GLOBAL_DIR=${GLOBAL_URL##*/}
 TAR=$(has_command tar)
@@ -10,14 +18,6 @@ WGET=$(has_command wget)
 PREFIX='/usr/local/stow/global'
 GLOBAL_BIN="$PREFIX/bin/global"
 SOURCE_DIR=~/sources
-
-has_command() {
-  command -v "$1"
-} >/dev/null 2>&1
-
-msg() {
-  printf >&2 '%s\n' "$@"
-}
 
 [ -f "$GLOBAL_BIN" ] && msg 'global was installed' && exit 0
 
