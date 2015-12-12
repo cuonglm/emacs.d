@@ -254,7 +254,9 @@
 ;; elpy
 (use-package elpy
   :ensure t
-  :init (with-eval-after-load 'python (elpy-enable))
+  :init
+  (setq elpy-rpc-backend "jedi")
+  (with-eval-after-load 'python (elpy-enable))
   :bind ("M-," . pop-tag-mark)
   :config
   (elpy-use-ipython)
@@ -268,7 +270,8 @@
     (setq fci-handle-truncate-lines t))
   (add-hook 'elpy-mode-hook
             (lambda ()
-              (local-set-key (kbd "C-c M-c") 'elpy-shell-switch-to-shell))))
+              (local-set-key (kbd "C-c M-c") 'elpy-shell-switch-to-shell)
+              (setq python-indent-offset 4))))
 
 ;; jinja2
 (use-package jinja2-mode
