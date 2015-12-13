@@ -6,8 +6,7 @@ help:
 	@echo "  pip         Install Python dependencies."
 	@echo "  go          Install Go dependencies."
 
-deps:
-	apt pip go
+deps: apt pip go
 
 go:
 	go get -u github.com/nsf/gocode \
