@@ -212,11 +212,10 @@
   (use-package helm-projectile
     :ensure t
     :bind (("M-x" . helm-M-x)
-           ("C-x C-f" . helm-find-files))
-    :config
-    (helm-projectile-on))
+           ("C-x C-f" . helm-find-files)))
   (projectile-global-mode)
   (setq projectile-completion-system 'helm)
+  (helm-projectile-on)
   (setq projectile-enable-caching t))
 
 ;; magit
