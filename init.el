@@ -259,18 +259,9 @@
   :bind ("M-," . pop-tag-mark)
   :config
   (elpy-use-ipython)
-  ;; fill column indicator
-  (use-package fill-column-indicator
-    :ensure t
-    :config
-    (add-hook 'after-change-major-mode-hook 'fci-mode)
-    (setq fci-rule-color "LightSlateBlue")
-    (setq-default fci-rule-column 79)
-    (setq fci-handle-truncate-lines t))
   (add-hook 'elpy-mode-hook
             (lambda ()
-              (local-set-key (kbd "C-c M-c") 'elpy-shell-switch-to-shell)
-              (setq python-indent-offset 4))))
+              (local-set-key (kbd "C-c M-c") 'elpy-shell-switch-to-shell))))
 
 ;; jinja2
 (use-package jinja2-mode
@@ -322,19 +313,40 @@
               (local-set-key (kbd "M-.") 'godef-jump)
               (local-set-key (kbd "C-c C-c d") 'godoc-at-point))))
 
+;; fill column indicator
+(use-package fill-column-indicator
+  :ensure t
+  :config
+  (setq fci-rule-color "LightSlateBlue")
+  (setq fci-handle-truncate-lines t)
+  (defun my/fci-config (mode fci-rule-column-num)
+    (setq-default fci-rule-column fci-rule-column-num)
+    (add-hook mode 'fci-mode))
+  (let (mode-config-hash)
+    (setq mode-config-hash (make-hash-table :test 'equal))
+    (puthash 'python-mode-hook 79 mode-config-hash)
+    (puthash 'c-mode-hook 80 mode-config-hash)
+    (puthash 'cperl-mode-hook 80 mode-config-hash)
+    (maphash (lambda (k v) (my/fci-config k v)) mode-config-hash)))
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
 ;;;;;;;;;;;;;;;;;;;;
 
 ;; sh-mode identation
 (add-hook 'sh-mode-hook
-  (lambda ()
-    (setq sh-basic-offset 2)
-    (setq sh-indentation 2)
-    (setq tab-width 2)
-    (define-key sh-mode-map (kbd "RET") 'reindent-then-newline-and-indent)))
+          (lambda ()
+            (setq sh-basic-offset 2)
+            (setq sh-indentation 2)
+            (setq tab-width 2)
+            (define-key sh-mode-map (kbd "RET") 'reindent-then-newline-and-indent)))
 
 ;; lisp indentation
 (add-hook 'emacs-lisp-mode-hook
-  (lambda ()
-    (setq lisp-body-indent 2)))
+          (lambda ()
+            (setq lisp-body-indent 2)))
+
+;; python indentation
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq python-indent-offset 4)))
