@@ -319,9 +319,12 @@
   :config
   (setq fci-rule-color "LightSlateBlue")
   (setq fci-handle-truncate-lines t)
-  (defun my/fci-config (mode fci-rule-column-num)
-    (setq-default fci-rule-column fci-rule-column-num)
-    (add-hook mode 'fci-mode))
+  (defun my/fci-config (mode num)
+    (lexical-let ((_num num))
+      (add-hook mode (lambda ()
+                       (progn
+                         (setq fci-rule-column _num)
+                         (fci-mode t))))))
   (let (mode-config-hash)
     (setq mode-config-hash (make-hash-table :test 'equal))
     (puthash 'python-mode-hook 79 mode-config-hash)
