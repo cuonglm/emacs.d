@@ -159,11 +159,11 @@
   :init
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   :config
-  (add-hook 'python-mode-hook 'flycheck-mode)
-  (add-hook 'cperl-mode-hook 'flycheck-mode)
-  (add-hook 'sh-mode-hook 'flycheck-mode)
-  (add-hook 'sh-mode-hook (lambda () (flycheck-select-checker 'sh-shellcheck)))
-  (add-hook 'go-mode-hook 'flycheck-mode)
+  (mapcar (lambda (mode) (add-hook mode 'flycheck-mode))
+          '(python-mode-hook cperl-mode-hook sh-mode-hook go-mode-hook))
+  (add-hook 'sh-mode-hook
+            (lambda ()
+              (flycheck-select-checker 'sh-shellcheck)))
   (add-hook 'go-mode-hook
             (lambda ()
               (flycheck-select-checker 'go-golint)
@@ -245,10 +245,22 @@
   :bind ("M-/" . company-complete-common)
   :config
   (add-hook 'after-init-hook 'global-company-mode)
-  (add-to-list 'company-backends 'company-c-headers)
-  (add-to-list 'company-backends 'company-ansible)
-  (add-to-list 'company-backends 'company-jedi)
-  (add-to-list 'company-backends 'company-go))
+  (mapcar (lambda (pkg) (add-to-list 'company-backends pkg))
+          '(company-c-headers company-ansible company-jedi company-go))
+  ;; Workaround for working with fci-mode
+  (defvar-local company-fci-mode-on-p nil)
+
+  (defun company-turn-off-fci (&rest ignore)
+    (when (boundp 'fci-mode)
+      (setq company-fci-mode-on-p fci-mode)
+      (when fci-mode (fci-mode -1))))
+
+  (defun company-maybe-turn-on-fci (&rest ignore)
+    (when company-fci-mode-on-p (fci-mode 1)))
+
+  (add-hook 'company-completion-started-hook 'company-turn-off-fci)
+  (add-hook 'company-completion-finished-hook 'company-maybe-turn-on-fci)
+  (add-hook 'company-completion-cancelled-hook 'company-maybe-turn-on-fci))
 
 ;; elpy
 (use-package elpy
@@ -332,11 +344,20 @@
     (puthash 'cperl-mode-hook 80 mode-config-hash)
     (maphash (lambda (k v) (my/fci-config k v)) mode-config-hash)))
 
+;; ws-butler
+(use-package ws-butler
+  :ensure t
+  :diminish ws-butler-mode
+  :config
+  (setq ws-butler-keep-whitespace-before-point nil)
+  (mapcar (lambda (mode) (add-hook mode 'ws-butler-mode))
+          '(prog-mode-hook yaml-mode-hook jinja2-mode-hook)))
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
 ;;;;;;;;;;;;;;;;;;;;
 
-;; sh-mode identation
+;; sh-mode indentation
 (add-hook 'sh-mode-hook
           (lambda ()
             (setq sh-basic-offset 2)
@@ -353,3 +374,8 @@
 (add-hook 'python-mode-hook
           (lambda ()
             (setq python-indent-offset 4)))
+
+;; C indentation
+(add-hook 'c-mode-hook
+          (lambda ()
+            (setq c-basic-offset 4)))
