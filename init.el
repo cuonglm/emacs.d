@@ -353,6 +353,19 @@
   (mapcar (lambda (mode) (add-hook mode 'ws-butler-mode))
           '(prog-mode-hook yaml-mode-hook jinja2-mode-hook)))
 
+;; markdown-mode
+(use-package markdown-mode
+  :ensure t
+  :pin marmalade
+  :mode "\\.md\\'"
+  :config
+  (add-hook 'markdown-mode-hook
+            (lambda ()
+              (when buffer-file-name
+                (add-hook 'after-save-hook
+                          'check-parens
+                          nil t)))))
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
 ;;;;;;;;;;;;;;;;;;;;
