@@ -159,8 +159,14 @@
   :init
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   :config
-  (mapcar (lambda (mode) (add-hook mode 'flycheck-mode))
-          '(python-mode-hook cperl-mode-hook sh-mode-hook go-mode-hook))
+  (mapcar
+   (lambda (mode) (add-hook mode 'flycheck-mode))
+   '(python-mode-hook
+     cperl-mode-hook
+     sh-mode-hook
+     go-mode-hook
+     c-mode-hook
+     c++-mode-hook))
   (add-hook 'sh-mode-hook
             (lambda ()
               (flycheck-select-checker 'sh-shellcheck)))
