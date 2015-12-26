@@ -263,8 +263,12 @@
   :bind ("M-/" . company-complete-common)
   :config
   (add-hook 'after-init-hook 'global-company-mode)
-  (mapc (lambda (pkg) (add-to-list 'company-backends pkg))
-          '(company-c-headers company-ansible company-jedi company-go))
+  (mapc
+   (lambda (pkg) (add-to-list 'company-backends pkg))
+   '(company-c-headers
+     company-ansible
+     company-jedi
+     company-go))
   ;; Workaround for working with fci-mode
   (defvar-local company-fci-mode-on-p nil)
 
@@ -368,8 +372,11 @@
   :diminish ws-butler-mode
   :config
   (setq ws-butler-keep-whitespace-before-point nil)
-  (mapc (lambda (mode) (add-hook mode 'ws-butler-mode))
-          '(prog-mode-hook yaml-mode-hook jinja2-mode-hook)))
+  (mapc
+   (lambda (mode) (add-hook mode 'ws-butler-mode))
+   '(prog-mode-hook
+     yaml-mode-hook
+     jinja2-mode-hook)))
 
 ;; markdown-mode
 (use-package markdown-mode
@@ -383,6 +390,11 @@
                 (add-hook 'after-save-hook
                           'check-parens
                           nil t)))))
+
+;; comment-dwim-2
+(use-package comment-dwim-2
+  :ensure t
+  :bind ("M-;" . comment-dwim-2))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
