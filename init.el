@@ -1,3 +1,15 @@
+;;; init.el --- CuongLM personal emacs configuration
+
+;;; Commentary:
+
+;; To use this init.el, you need to install all dependencies first:
+;;
+;;    $ sudo make deps
+;;    $ sh install_global.sh
+;;
+
+;;; Code:
+
 ;; package.el for packages manager
 (require 'package)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -159,14 +171,15 @@
   :init
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   :config
-  (mapcar
+  (mapc
    (lambda (mode) (add-hook mode 'flycheck-mode))
    '(python-mode-hook
      cperl-mode-hook
      sh-mode-hook
      go-mode-hook
      c-mode-hook
-     c++-mode-hook))
+     c++-mode-hook
+     emacs-lisp-mode-hook))
   (add-hook 'sh-mode-hook
             (lambda ()
               (flycheck-select-checker 'sh-shellcheck)))
@@ -192,19 +205,18 @@
   :bind ("C-M-p" . plcmp-cmd-complete-all)
   :config
   (add-hook 'cperl-mode-hook
-            (lambda()
-              (perl-completion-mode t)
-              (when (require 'auto-complete nil t) ; no error whatever auto-complete.el is not installed.
-                (auto-complete-mode t)
-                (make-variable-buffer-local 'ac-sources)
-                (setq ac-sources
-                    '(ac-source-perl-completion)))
-              (setq cperl-indent-level 4
-                    cperl-close-paren-offset -4
-                    cperl-continued-statement-offset 4
-                    cperl-tab-always-indent t
-                    cperl-indent-parens-as-block t
-                    perl-indent-parens-as-block t))))
+            `(lambda()
+               (perl-completion-mode t)
+               (when (require 'auto-complete nil t) ; no error whatever auto-complete.el is not installed.
+                 (auto-complete-mode t)
+                 (make-local-variable 'ac-sources)
+                 (setq ac-sources '(ac-source-perl-completion)))
+               (setq cperl-indent-level 4
+                     cperl-close-paren-offset -4
+                     cperl-continued-statement-offset 4
+                     cperl-tab-always-indent t
+                     cperl-indent-parens-as-block t
+                     perl-indent-parens-as-block t))))
 
 ;; neo tree
 (use-package neotree
@@ -251,7 +263,7 @@
   :bind ("M-/" . company-complete-common)
   :config
   (add-hook 'after-init-hook 'global-company-mode)
-  (mapcar (lambda (pkg) (add-to-list 'company-backends pkg))
+  (mapc (lambda (pkg) (add-to-list 'company-backends pkg))
           '(company-c-headers company-ansible company-jedi company-go))
   ;; Workaround for working with fci-mode
   (defvar-local company-fci-mode-on-p nil)
@@ -356,7 +368,7 @@
   :diminish ws-butler-mode
   :config
   (setq ws-butler-keep-whitespace-before-point nil)
-  (mapcar (lambda (mode) (add-hook mode 'ws-butler-mode))
+  (mapc (lambda (mode) (add-hook mode 'ws-butler-mode))
           '(prog-mode-hook yaml-mode-hook jinja2-mode-hook)))
 
 ;; markdown-mode
@@ -398,3 +410,8 @@
 (add-hook 'c-mode-hook
           (lambda ()
             (setq c-basic-offset 4)))
+
+(provide 'init)
+;;; init.el ends here
+
+;; coding: utf-8
