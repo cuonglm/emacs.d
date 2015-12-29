@@ -179,7 +179,8 @@
      go-mode-hook
      c-mode-hook
      c++-mode-hook
-     emacs-lisp-mode-hook))
+     emacs-lisp-mode-hook
+     php-mode-hook))
   (add-hook 'sh-mode-hook
             (lambda ()
               (flycheck-select-checker 'sh-shellcheck)))
@@ -407,6 +408,11 @@
 ;; xlicense
 (use-package xlicense
   :ensure t)
+
+;; web-mode
+(use-package web-mode
+  :ensure t
+  :mode ("\\.html?\\'" "\\.phtml\\'" "\\.tpl\\.php\\'"))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
