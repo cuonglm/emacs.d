@@ -188,6 +188,13 @@
               (flycheck-select-checker 'go-golint)
               (setq flycheck-disabled-checkers '(go-build)))))
 
+;; flycheck-checkbashisms
+(use-package flycheck-checkbashisms
+  :ensure t
+  :config
+  (flycheck-checkbashisms-setup)
+  (setq flycheck-checkbashisms-posix t))
+
 ;; undo-tree
 (use-package undo-tree
   :ensure t
@@ -345,7 +352,8 @@
   (add-hook 'go-mode-hook
             (lambda ()
               (local-set-key (kbd "M-.") 'godef-jump)
-              (local-set-key (kbd "C-c C-c d") 'godoc-at-point))))
+              (local-set-key (kbd "C-c C-c d") 'godoc-at-point)
+              (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports))))
 
 ;; fill column indicator
 (use-package fill-column-indicator
@@ -395,6 +403,10 @@
 (use-package comment-dwim-2
   :ensure t
   :bind ("M-;" . comment-dwim-2))
+
+;; xlicense
+(use-package xlicense
+  :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
