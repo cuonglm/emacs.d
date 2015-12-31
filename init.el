@@ -48,11 +48,10 @@
 (setq x-select-enable-clipboard t)
 
 ;; cperl-mode is preferred to perl-mode
-(mapc
- (lambda (pair)
-   (if (eq (cdr pair) 'perl-mode)
-       (setcdr pair 'cperl-mode)))
- (append auto-mode-alist interpreter-mode-alist))
+(mapc (lambda (pair)
+        (if (eq (cdr pair) 'perl-mode)
+            (setcdr pair 'cperl-mode)))
+      (append auto-mode-alist interpreter-mode-alist))
 
 ;;;;;;;;;;;;;;;;
 ;; GUI config ;;
@@ -171,19 +170,20 @@
   :init
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   :config
-  (mapc
-   (lambda (mode) (add-hook mode 'flycheck-mode))
-   '(python-mode-hook
-     cperl-mode-hook
-     sh-mode-hook
-     go-mode-hook
-     c-mode-hook
-     c++-mode-hook
-     emacs-lisp-mode-hook
-     php-mode-hook))
+  (mapc (lambda (mode)
+          (add-hook mode 'flycheck-mode))
+        '(python-mode-hook
+          cperl-mode-hook
+          sh-mode-hook
+          go-mode-hook
+          c-mode-hook
+          c++-mode-hook
+          emacs-lisp-mode-hook
+          php-mode-hook))
   (add-hook 'sh-mode-hook
             (lambda ()
-              (flycheck-select-checker 'sh-shellcheck)))
+              (flycheck-select-checker 'sh-shellcheck)
+              (flycheck-add-next-checker 'sh-shellcheck '(error . sh-checkbashisms))))
   (add-hook 'go-mode-hook
             (lambda ()
               (flycheck-select-checker 'go-golint)
@@ -271,12 +271,12 @@
   :bind ("M-/" . company-complete-common)
   :config
   (add-hook 'after-init-hook 'global-company-mode)
-  (mapc
-   (lambda (pkg) (add-to-list 'company-backends pkg))
-   '(company-c-headers
-     company-ansible
-     company-jedi
-     company-go))
+  (mapc (lambda (pkg)
+          (add-to-list 'company-backends pkg))
+        '(company-c-headers
+          company-ansible
+          company-jedi
+          company-go))
   ;; Workaround for working with fci-mode
   (defvar-local company-fci-mode-on-p nil)
 
@@ -381,11 +381,11 @@
   :diminish ws-butler-mode
   :config
   (setq ws-butler-keep-whitespace-before-point nil)
-  (mapc
-   (lambda (mode) (add-hook mode 'ws-butler-mode))
-   '(prog-mode-hook
-     yaml-mode-hook
-     jinja2-mode-hook)))
+  (mapc (lambda (mode)
+          (add-hook mode 'ws-butler-mode))
+        '(prog-mode-hook
+          yaml-mode-hook
+          jinja2-mode-hook)))
 
 ;; markdown-mode
 (use-package markdown-mode
@@ -413,6 +413,16 @@
 (use-package web-mode
   :ensure t
   :mode ("\\.html?\\'" "\\.phtml\\'" "\\.tpl\\.php\\'"))
+
+;; elisp-slime-nav
+(use-package elisp-slime-nav
+  :ensure t
+  :diminish elisp-slime-nav-mode
+  :config
+  (mapc (lambda (mode)
+          (add-hook mode 'elisp-slime-nav-mode))
+        '(emacs-lisp-mode-hook
+          ielm-mode-hook)))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
