@@ -93,6 +93,9 @@
 ;; Show paren mode
 (show-paren-mode t)
 
+;; scroll-margin
+(setq scroll-margin 5)
+
 ;;;;;;;;;;;;;;;;;
 ;; Key binding ;;
 ;;;;;;;;;;;;;;;;;
@@ -423,6 +426,12 @@
           (add-hook mode 'elisp-slime-nav-mode))
         '(emacs-lisp-mode-hook
           ielm-mode-hook)))
+
+;; perspective
+(use-package perspective
+  :ensure t
+  :config
+  (persp-mode))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
