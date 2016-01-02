@@ -185,8 +185,7 @@
           php-mode-hook))
   (add-hook 'sh-mode-hook
             (lambda ()
-              (flycheck-select-checker 'sh-shellcheck)
-              (flycheck-add-next-checker 'sh-shellcheck '(error . sh-checkbashisms))))
+              (flycheck-select-checker 'sh-shellcheck)))
   (add-hook 'go-mode-hook
             (lambda ()
               (flycheck-select-checker 'go-golint)
