@@ -18,4 +18,8 @@ pip:
 		pip install -r python_requirements.txt
 
 apt:
-	apt-get install clang shellcheck
+	apt-get install \
+		clang \
+		shellcheck \
+		xfonts-terminus \
+		xfonts-terminus-oblique
