@@ -121,6 +121,17 @@
 ;; C-x C-b as ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;; Indent region or buffer
+(defun indent-region-or-buffer ()
+  "Indent region if active, otherwise buffer."
+  (interactive)
+  (save-excursion
+    (if (region-active-p)
+        (indent-region (region-beginning) (region-end))
+      (indent-region (point-min) (point-max)))))
+
+(global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
+
 ;;;;;;;;;;;;;;;;;;;;;
 ;; Packages config ;;
 ;;;;;;;;;;;;;;;;;;;;;
