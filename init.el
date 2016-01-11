@@ -196,7 +196,8 @@
           c-mode-hook
           c++-mode-hook
           emacs-lisp-mode-hook
-          php-mode-hook))
+          php-mode-hook
+          perl6-mode-hook))
   (add-hook 'sh-mode-hook
             (lambda ()
               (flycheck-select-checker 'sh-shellcheck)))
@@ -211,6 +212,10 @@
   :config
   (flycheck-checkbashisms-setup)
   (setq flycheck-checkbashisms-posix t))
+
+;; flycheck-per6
+(use-package flycheck-perl6
+  :ensure t)
 
 ;; undo-tree
 (use-package undo-tree
@@ -445,6 +450,10 @@
   :ensure t
   :config
   (persp-mode))
+
+;; Perl6
+(use-package perl6-mode
+  :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
