@@ -455,6 +455,11 @@
 (use-package perl6-mode
   :ensure t)
 
+;; helm-c-yasnippet
+(use-package helm-c-yasnippet
+  :ensure t
+  :bind ("C-c y" . helm-yas-complete))
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
 ;;;;;;;;;;;;;;;;;;;;
