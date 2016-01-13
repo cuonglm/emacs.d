@@ -461,6 +461,10 @@
   :ensure t
   :bind ("C-c y" . helm-yas-complete))
 
+;; dockerfile-mode
+(use-package dockerfile-mode
+  :ensure t)
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
 ;;;;;;;;;;;;;;;;;;;;
