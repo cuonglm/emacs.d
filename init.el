@@ -15,7 +15,7 @@
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")
-                         ("melpa-stable" . "http://melpa.milkbox.net/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("elpy" . "https://jorgenschaefer.github.io/packages/")))
 (package-initialize)
 
@@ -267,7 +267,8 @@
 
 ;; magit
 (use-package magit
-  :ensure t)
+  :ensure t
+  :pin melpa-stable)
 
 ;; company-go
 (use-package company-go
