@@ -267,8 +267,7 @@
 
 ;; magit
 (use-package magit
-  :ensure t
-  :pin melpa-stable)
+  :ensure t)
 
 ;; company-go
 (use-package company-go
