@@ -6,7 +6,7 @@ help:
 	@echo "  pip         Install Python dependencies."
 	@echo "  go          Install Go dependencies."
 
-deps: apt pip go
+deps: apt pip go cabal haskell
 
 go:
 	go get -u github.com/nsf/gocode \
@@ -22,4 +22,21 @@ apt:
 		clang \
 		shellcheck \
 		xfonts-terminus \
-		xfonts-terminus-oblique
+		xfonts-terminus-oblique \
+		ghc \
+		cabal-install
+
+cabal:
+	cabal update
+	cabal install cabal cabal-install
+
+haskell:
+	cabal install happy
+	cabal install hasktags
+	./cabal_clean
+	cabal install stylish-haskell
+	cabal install ghc-mod
+	cabal install hoogle
+	hoogle data
+	./cabal_clean
+	cabal install structured-haskell-mode

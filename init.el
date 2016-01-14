@@ -285,6 +285,12 @@
 (use-package company-c-headers
   :ensure t)
 
+;; company-ghc
+(use-package company-ghc
+  :ensure t
+  :config
+  (custom-set-variables '(company-ghc-show-info t)))
+
 ;; company
 (use-package company
   :ensure t
@@ -297,7 +303,8 @@
         '(company-c-headers
           company-ansible
           company-jedi
-          company-go))
+          company-go
+          company-ghc))
   ;; Workaround for working with fci-mode
   (defvar-local company-fci-mode-on-p nil)
 
@@ -357,7 +364,7 @@
         helm-gtags-suggested-key-mapping t)
   (add-hook 'c-mode-hook 'helm-gtags-mode)
   (add-hook 'c++-mode-hook 'helm-gtags-mode)
-  (eval-after-load "helm-gtags"
+  (eval-after-load 'helm-gtags
     '(progn
        (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
        (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
@@ -463,6 +470,48 @@
 ;; dockerfile-mode
 (use-package dockerfile-mode
   :ensure t)
+
+;; haskell-mode
+(use-package haskell-mode
+  :ensure t
+  :config
+  (eval-after-load 'haskell-mode
+    '(progn
+       (define-key haskell-mode-map [f8] 'haskell-navigate-imports)
+       (define-key haskell-mode-map (kbd "C-M-\\") 'haskell-mode-stylish-buffer)
+       (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+       (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
+       (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
+       (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
+       (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
+       (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)
+       (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)))
+  (eval-after-load 'haskell-cabal
+    '(progn
+       (define-key haskell-cabal-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
+       (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+       (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+       (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
+  (custom-set-variables
+   '(haskell-tags-on-save t)
+   '(haskell-process-suggest-remove-import-lines t)
+   '(haskell-process-auto-import-loaded-modules t)
+   '(haskell-process-log t)
+   '(haskell-process-type 'cabal-repl)))
+
+;; ghc
+(use-package ghc
+  :ensure t
+  :config
+  (autoload 'ghc-init "ghc" nil t)
+  (autoload 'ghc-debug "ghc" nil t)
+  (add-hook 'haskell-mode-hook (lambda () (ghc-init))))
+
+;; shm
+(use-package shm
+  :ensure t
+  :config
+    (add-hook 'haskell-mode-hook 'structured-haskell-mode))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
