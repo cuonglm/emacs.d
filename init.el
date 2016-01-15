@@ -511,7 +511,9 @@
 (use-package shm
   :ensure t
   :config
-    (add-hook 'haskell-mode-hook 'structured-haskell-mode))
+  (add-hook 'haskell-mode-hook 'structured-haskell-mode)
+  (set-face-background 'shm-current-face "#eee8d5")
+  (set-face-background 'shm-quarantine-face "lemonchiffon"))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
