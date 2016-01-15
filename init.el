@@ -494,6 +494,7 @@
        (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
   (custom-set-variables
    '(haskell-tags-on-save t)
+   '(haskell-stylish-on-save t)
    '(haskell-process-suggest-remove-import-lines t)
    '(haskell-process-auto-import-loaded-modules t)
    '(haskell-process-log t)

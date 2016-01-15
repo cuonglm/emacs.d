@@ -5,7 +5,5 @@ GHC_DIR="$HOME/.ghc"
 
 cd -- "$GHC_DIR"
 find . ! -name . -prune -type d -exec rm -rf {} +
-cd -- "${CABAL_DIR}/share"
-find . ! -path "*hoogle*" -type f -exec rm -rf {} +
 rm -rf "${CABAL_DIR}/lib" "${CABAL_DIR}/packages"
 cabal update
