@@ -4,7 +4,7 @@ set -eu
 
 has_command() {
   command -v "$1"
-} >/dev/null 2>&1
+} 2>/dev/null
 
 msg() {
   printf >&2 '%s\n' "$@"
