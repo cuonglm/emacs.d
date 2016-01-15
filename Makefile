@@ -1,10 +1,12 @@
-.PHONY: help deps go pip apt
+.PHONY: help deps go pip apt cabal haskell
 
 help:
 	@echo "  deps        Install all dependencies."
 	@echo "  apt         Install OS dependencies using apt-get."
 	@echo "  pip         Install Python dependencies."
 	@echo "  go          Install Go dependencies."
+	@echo "  cabal       Update cabale to latest version."
+	@echo "  haskell     Install Haskell dependencies."
 
 deps: apt pip go cabal haskell
 
