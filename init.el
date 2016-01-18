@@ -298,13 +298,13 @@
   :bind ("M-/" . company-complete-common)
   :config
   (add-hook 'after-init-hook 'global-company-mode)
+  (add-to-list 'company-backends '(company-ghc :with company-dabbrev-code))
   (mapc (lambda (pkg)
           (add-to-list 'company-backends pkg))
         '(company-c-headers
           company-ansible
           company-jedi
-          company-go
-          company-ghc))
+          company-go))
   ;; Workaround for working with fci-mode
   (defvar-local company-fci-mode-on-p nil)
 
