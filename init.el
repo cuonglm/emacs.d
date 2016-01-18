@@ -478,17 +478,17 @@
   (eval-after-load 'haskell-mode
     '(progn
        (define-key haskell-mode-map [f8] 'haskell-navigate-imports)
-       (define-key haskell-mode-map (kbd "C-M-\\") 'haskell-mode-stylish-buffer)
        (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
        (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
        (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
        (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
        (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
        (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)
-       (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)))
+       (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+       (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)))
   (eval-after-load 'haskell-cabal
     '(progn
-       (define-key haskell-cabal-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
+       (define-key haskell-cabal-mode-map (kbd "C-c C-s") 'haskell-interactive-switch)
        (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
        (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
        (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
@@ -515,6 +515,24 @@
   (add-hook 'haskell-mode-hook 'structured-haskell-mode)
   (set-face-background 'shm-current-face "#eee8d5")
   (set-face-background 'shm-quarantine-face "lemonchiffon"))
+
+;; hindent
+(use-package hindent
+  :ensure t
+  :config
+  (defun my/hindent-reformat-region-or-buffer ()
+    "Reformat region if active, otherwise buffer."
+    (interactive)
+    (save-excursion
+      (if (region-active-p)
+          (hindent-reformat-region (region-beginning) (region-end))
+        (hindent-reformat-buffer))))
+  (add-hook 'haskell-mode-hook 'hindent-mode)
+  (eval-after-load 'haskell-mode
+    '(progn
+       (define-key haskell-mode-map (kbd "C-M-\\") 'my/hindent-reformat-region-or-buffer)))
+  (custom-set-variables
+   '(hindent-style "johan-tibell")))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;

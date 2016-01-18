@@ -42,3 +42,5 @@ haskell:
 	hoogle data
 	./cabal_clean
 	cabal install structured-haskell-mode
+	./cabal_clean
+	cabal install hindent
