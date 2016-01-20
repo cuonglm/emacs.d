@@ -122,7 +122,7 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Indent region or buffer
-(defun indent-region-or-buffer ()
+(defun my/indent-region-or-buffer ()
   "Indent region if active, otherwise buffer."
   (interactive)
   (save-excursion
@@ -130,7 +130,7 @@
         (indent-region (region-beginning) (region-end))
       (indent-region (point-min) (point-max)))))
 
-(global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
+(global-set-key (kbd "C-M-\\") 'my/indent-region-or-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;
 ;; Packages config ;;
@@ -309,17 +309,17 @@
   ;; Workaround for working with fci-mode
   (defvar-local company-fci-mode-on-p nil)
 
-  (defun company-turn-off-fci (&rest ignore)
+  (defun my/company-turn-off-fci (&rest ignore)
     (when (boundp 'fci-mode)
       (setq company-fci-mode-on-p fci-mode)
       (when fci-mode (fci-mode -1))))
 
-  (defun company-maybe-turn-on-fci (&rest ignore)
+  (defun my/company-maybe-turn-on-fci (&rest ignore)
     (when company-fci-mode-on-p (fci-mode 1)))
 
-  (add-hook 'company-completion-started-hook 'company-turn-off-fci)
-  (add-hook 'company-completion-finished-hook 'company-maybe-turn-on-fci)
-  (add-hook 'company-completion-cancelled-hook 'company-maybe-turn-on-fci))
+  (add-hook 'company-completion-started-hook 'my/company-turn-off-fci)
+  (add-hook 'company-completion-finished-hook 'my/company-maybe-turn-on-fci)
+  (add-hook 'company-completion-cancelled-hook 'my/company-maybe-turn-on-fci))
 
 ;; elpy
 (use-package elpy
