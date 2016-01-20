@@ -260,6 +260,7 @@
     :ensure t
     :bind (("M-x" . helm-M-x)
            ("C-x C-f" . helm-find-files)))
+  (setq helm-M-x-fuzzy-match t)
   (projectile-global-mode)
   (setq projectile-completion-system 'helm)
   (helm-projectile-on)
@@ -475,6 +476,10 @@
 (use-package haskell-mode
   :ensure t
   :config
+  (defun my/haskell-mode-hoogle-at-point ()
+    "Show Hoogle documentation for the indentifier at POINT."
+    (interactive)
+    (haskell-hoogle (thing-at-point 'word) t))
   (eval-after-load 'haskell-mode
     '(progn
        (define-key haskell-mode-map [f8] 'haskell-navigate-imports)
@@ -485,7 +490,8 @@
        (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
        (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)
        (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
-       (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)))
+       (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)
+       (define-key haskell-mode-map (kbd "C-c d") 'my/haskell-mode-hoogle-at-point)))
   (eval-after-load 'haskell-cabal
     '(progn
        (define-key haskell-cabal-mode-map (kbd "C-c C-s") 'haskell-interactive-switch)
