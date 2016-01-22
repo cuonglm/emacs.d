@@ -255,6 +255,7 @@
 ;; projectile + helm
 (use-package projectile
   :ensure t
+  :init (bind-key "C-x b" 'projectile-ibuffer)
   :config
   (use-package helm-projectile
     :ensure t
