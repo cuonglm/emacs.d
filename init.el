@@ -324,6 +324,7 @@
 ;; elpy
 (use-package elpy
   :ensure t
+  :diminish auto-revert-mode
   :init
   (setq elpy-rpc-backend "jedi")
   (with-eval-after-load 'python (elpy-enable))
@@ -525,6 +526,7 @@
 ;; hindent
 (use-package hindent
   :ensure t
+  :diminish hindent-mode
   :config
   (defun my/hindent-reformat-region-or-buffer ()
     "Reformat region if active, otherwise buffer."
