@@ -543,6 +543,13 @@
   (custom-set-variables
    '(hindent-style "johan-tibell")))
 
+;; ansible-doc
+(use-package ansible-doc
+  :ensure t
+  :diminish ansible-doc-mode
+  :config
+  (add-hook 'yaml-mode-hook #'ansible-doc-mode))
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
 ;;;;;;;;;;;;;;;;;;;;
