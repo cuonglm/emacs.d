@@ -197,7 +197,8 @@
           c++-mode-hook
           emacs-lisp-mode-hook
           php-mode-hook
-          perl6-mode-hook))
+          perl6-mode-hook
+          lua-mode-hook))
   (add-hook 'sh-mode-hook
             (lambda ()
               (flycheck-select-checker 'sh-shellcheck)))
@@ -549,6 +550,10 @@
   :diminish ansible-doc-mode
   :config
   (add-hook 'yaml-mode-hook #'ansible-doc-mode))
+
+;; lua-mode
+(use-package lua-mode
+  :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
