@@ -8,7 +8,7 @@ help:
 	@echo "  cabal       Update cabale to latest version."
 	@echo "  haskell     Install Haskell dependencies."
 
-deps: apt pip go cabal haskell
+deps: apt pip go cabal haskell js
 
 go:
 	go get -u github.com/nsf/gocode \
@@ -26,7 +26,9 @@ apt:
 		xfonts-terminus \
 		xfonts-terminus-oblique \
 		ghc \
-		cabal-install
+		cabal-install \
+		npm \
+		nodejs
 
 cabal:
 	cabal update
@@ -44,3 +46,6 @@ haskell:
 	cabal install structured-haskell-mode
 	./cabal_clean
 	cabal install hindent
+
+js:
+	npm install -g tern

@@ -294,6 +294,12 @@
   :config
   (custom-set-variables '(company-ghc-show-info t)))
 
+;; company-tern
+(use-package company-tern
+  :ensure t
+  :config
+  (setq company-tern-meta-as-single-line t))
+
 ;; company
 (use-package company
   :ensure t
@@ -307,7 +313,8 @@
         '(company-c-headers
           company-ansible
           company-jedi
-          company-go))
+          company-go
+          company-tern))
   ;; Workaround for working with fci-mode
   (defvar-local company-fci-mode-on-p nil)
 
@@ -554,6 +561,12 @@
 ;; lua-mode
 (use-package lua-mode
   :ensure t)
+
+;; tern-mode
+(use-package tern
+  :ensure t
+  :config
+  (add-hook 'js-mode-hook (lambda () (tern-mode t))))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
