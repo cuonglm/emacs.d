@@ -261,7 +261,8 @@
   (use-package helm-projectile
     :ensure t
     :bind (("M-x" . helm-M-x)
-           ("C-x C-f" . helm-find-files)))
+           ("C-x C-f" . helm-find-files)
+           ("C-c h m" . helm-man-woman)))
   (setq helm-M-x-fuzzy-match t)
   (projectile-global-mode)
   (setq projectile-completion-system 'helm)
@@ -568,11 +569,43 @@
   :config
   (add-hook 'js-mode-hook (lambda () (tern-mode t))))
 
+;; smartparens
+(use-package smartparens
+  :ensure t
+  :diminish smartparens-mode
+  :config
+  (show-smartparens-global-mode t)
+  (smartparens-global-mode t)
+  (sp-with-modes
+   '(c-mode c++-mode)
+   (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET")))
+   (sp-local-pair "/*" "*/" :post-handlers '((" | " "SPC") ("* ||\n[i]" "RET")))))
+
+;; cc-mode
+(use-package cc-mode
+  :ensure t
+  :commands c-mode
+  :config
+  (add-hook
+   'c-mode-hook
+   (lambda ()
+     (setq c-basic-offset 4)
+     (setq c-default-style "gnu"))))
+
+;; semantic-stickyfunc-enhance
+(use-package stickyfunc-enhance
+  :ensure t
+  :config
+  (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
+  (add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode)
+  (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode)
+  (semantic-mode t))
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
 ;;;;;;;;;;;;;;;;;;;;
 
-;; sh-mode indentation
+;; sh-mode
 (add-hook 'sh-mode-hook
           (lambda ()
             (setq sh-basic-offset 2)
@@ -580,20 +613,15 @@
             (setq tab-width 2)
             (define-key sh-mode-map (kbd "RET") 'reindent-then-newline-and-indent)))
 
-;; lisp indentation
+;; lisp
 (add-hook 'emacs-lisp-mode-hook
           (lambda ()
             (setq lisp-body-indent 2)))
 
-;; python indentation
+;; python
 (add-hook 'python-mode-hook
           (lambda ()
             (setq python-indent-offset 4)))
-
-;; C indentation
-(add-hook 'c-mode-hook
-          (lambda ()
-            (setq c-basic-offset 4)))
 
 (provide 'init)
 ;;; init.el ends here
