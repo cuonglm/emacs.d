@@ -575,8 +575,6 @@
   :ensure t
   :diminish smartparens-mode
   :config
-  (show-smartparens-global-mode t)
-  (smartparens-global-mode t)
   (sp-with-modes
    '(c-mode c++-mode)
    (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET")))
@@ -591,7 +589,9 @@
    'c-mode-hook
    (lambda ()
      (setq c-basic-offset 4)
-     (setq c-default-style "gnu"))))
+     (setq c-default-style "gnu")
+     (show-smartparens-global-mode t)
+     (smartparens-global-mode t))))
 
 ;; semantic-stickyfunc-enhance
 (use-package stickyfunc-enhance
