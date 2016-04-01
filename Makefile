@@ -13,7 +13,8 @@ deps: apt pip go cabal haskell js
 go:
 	go get -u github.com/nsf/gocode \
 			  github.com/rogpeppe/godef \
-			  github.com/golang/lint/golint
+			  github.com/golang/lint/golint \
+			  golang.org/x/tools/cmd/goimports
 
 pip:
 	easy_install pip && \
