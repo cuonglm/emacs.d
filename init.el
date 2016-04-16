@@ -568,6 +568,7 @@
 ;; tern-mode
 (use-package tern
   :ensure t
+  :diminish tern-mode
   :config
   (add-hook 'js-mode-hook (lambda () (tern-mode t))))
 
@@ -602,6 +603,11 @@
   (add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode)
   (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode)
   (semantic-mode t))
+
+;; js2-mode
+(use-package js2-mode
+  :ensure t
+  :mode "\\.js\\'")
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
