@@ -14,7 +14,9 @@ go:
 	go get -u github.com/nsf/gocode \
 			  github.com/rogpeppe/godef \
 			  github.com/golang/lint/golint \
-			  golang.org/x/tools/cmd/goimports
+			  golang.org/x/tools/cmd/goimports \
+			  golang.org/x/tools/cmd/oracle \
+			  github.com/jstemmer/gotags
 
 pip:
 	easy_install pip && \

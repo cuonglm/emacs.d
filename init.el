@@ -395,8 +395,7 @@
   (add-hook 'go-mode-hook
             (lambda ()
               (local-set-key (kbd "M-.") 'godef-jump)
-              (local-set-key (kbd "C-c C-c d") 'godoc-at-point)
-              (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports))))
+              (local-set-key (kbd "C-c C-c d") 'godoc-at-point))))
 
 ;; fill column indicator
 (use-package fill-column-indicator
