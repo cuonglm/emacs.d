@@ -263,7 +263,8 @@
     :ensure t
     :bind (("M-x" . helm-M-x)
            ("C-x C-f" . helm-find-files)
-           ("C-c h m" . helm-man-woman)))
+           ("C-c h m" . helm-man-woman)
+           ("C-c p s a" . helm-projectile-ack)))
   (setq helm-M-x-fuzzy-match t)
   (projectile-global-mode)
   (setq projectile-completion-system 'helm)
@@ -607,6 +608,13 @@
 (use-package js2-mode
   :ensure t
   :mode "\\.js\\'")
+
+;; ag.el
+(use-package ag
+  :ensure t
+  :config
+  (setq ag-highlight-search t)
+  (setq ag-reuse-buffers 't))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
