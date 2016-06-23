@@ -616,6 +616,13 @@
   (setq ag-highlight-search t)
   (setq ag-reuse-buffers 't))
 
+;; ensime
+(use-package ensime
+  :ensure t
+  :commands ensime ensime-mode
+  :config
+  (add-hook 'scala-mode-hook 'ensime-mode))
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
 ;;;;;;;;;;;;;;;;;;;;
