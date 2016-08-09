@@ -97,7 +97,9 @@
 (setq scroll-margin 5)
 
 ;; Default font
-(set-frame-font "Terminus-13" t t)
+(if (eq system-type 'darwin)
+  (set-frame-font "Terminus \(TTF\)-13" t t)
+(set-frame-font "Terminus-13" t t))
 
 ;;;;;;;;;;;;;;;;;
 ;; Key binding ;;
