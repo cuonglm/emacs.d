@@ -1,4 +1,6 @@
 My Emacs configuration and packages management
 
- - Run `sudo make deps` to install dependencies
+ - Install dependencies using one of `make` target depend on your OS.
+ Only Arch, Debian base support for now.
+
  - Start emacs and wait for packages installation

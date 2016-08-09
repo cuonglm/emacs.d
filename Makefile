@@ -1,4 +1,4 @@
-.PHONY: help deps go pip apt cabal haskell
+.PHONY: help go pip apt cabal haskell
 
 help:
 	@echo "  apt         Install OS dependencies using apt-get."
