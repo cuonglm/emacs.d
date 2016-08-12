@@ -400,6 +400,10 @@
               (local-set-key (kbd "M-.") 'godef-jump)
               (local-set-key (kbd "C-c C-c d") 'godoc-at-point))))
 
+;; gotest
+(use-package gotest
+  :ensure t)
+
 ;; fill column indicator
 (use-package fill-column-indicator
   :ensure t
