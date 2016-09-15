@@ -53,6 +53,10 @@
             (setcdr pair 'cperl-mode)))
       (append auto-mode-alist interpreter-mode-alist))
 
+;; custom file
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
 ;;;;;;;;;;;;;;;;
 ;; GUI config ;;
 ;;;;;;;;;;;;;;;;
@@ -114,7 +118,7 @@
 ;; C-w to kill word backward
 (global-set-key (kbd "C-w") 'backward-kill-word)
 
-;; C-c C-w to kill region
+;; C-x C-w to kill region
 (global-set-key (kbd "C-x C-w") 'kill-region)
 
 ;; C-c h for help command
