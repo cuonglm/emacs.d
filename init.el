@@ -45,7 +45,9 @@
 (setq-default indent-tabs-mode nil)
 
 ;; Enable clipboard
-(setq x-select-enable-clipboard t)
+(if (version< emacs-version "25.1")
+    (setq x-select-enable-clipboard t)
+  (setq select-enable-clipboard t))
 
 ;; cperl-mode is preferred to perl-mode
 (mapc (lambda (pair)
