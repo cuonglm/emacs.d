@@ -637,6 +637,10 @@
   :config
   (add-hook 'scala-mode-hook 'ensime-mode))
 
+;; rust-mode
+(use-package rust-mode
+  :ensure t)
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
 ;;;;;;;;;;;;;;;;;;;;
