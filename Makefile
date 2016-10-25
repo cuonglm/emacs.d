@@ -60,3 +60,6 @@ haskell:
 
 js:
 	npm install -g tern
+
+rust:
+	cargo install racer rustfmt

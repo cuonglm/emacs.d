@@ -639,7 +639,18 @@
 
 ;; rust-mode
 (use-package rust-mode
-  :ensure t)
+  :ensure t
+  :config
+  (add-hook 'rust-mode-hook 'racer-mode)
+  (add-hook 'racer-mode-hook 'eldoc-mode))
+
+;; racer-mode
+(use-package racer
+  :ensure t
+  :bind ("C-c C-c d" . racer-describe)
+  :config
+  (setq racer-rust-src-path (expand-file-name "~/sources/rust/src/"))
+  (add-hook 'racer-mode-hook 'company-mode))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
