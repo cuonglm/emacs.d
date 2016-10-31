@@ -209,7 +209,8 @@
           emacs-lisp-mode-hook
           php-mode-hook
           perl6-mode-hook
-          lua-mode-hook))
+          lua-mode-hook
+          rust-mode-hook))
   (add-hook 'sh-mode-hook
             (lambda ()
               (flycheck-select-checker 'sh-shellcheck)))
@@ -228,6 +229,12 @@
 ;; flycheck-per6
 (use-package flycheck-perl6
   :ensure t)
+
+;; flycheck-rust
+(use-package flycheck-rust
+  :ensure t
+  :config
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;; undo-tree
 (use-package undo-tree
