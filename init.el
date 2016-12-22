@@ -382,6 +382,10 @@
 (use-package elixir-mode
   :ensure t)
 
+;; Alchemist
+(use-package alchemist
+  :ensure t)
+
 ;; helm-gtags
 (use-package helm-gtags
   :ensure t
