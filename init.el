@@ -663,6 +663,12 @@
   (setq racer-rust-src-path (expand-file-name "~/sources/rust/src/"))
   (add-hook 'racer-mode-hook 'company-mode))
 
+;; direnv
+(use-package direnv
+  :ensure t
+  :config
+  (direnv-mode t))
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
 ;;;;;;;;;;;;;;;;;;;;
