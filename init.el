@@ -61,6 +61,10 @@
   (with-temp-buffer (write-file custom-file)))
 (load custom-file)
 
+;; dired for osx
+(when (string= system-type "darwin")
+  (setq dired-use-ls-dired nil))
+
 ;;;;;;;;;;;;;;;;
 ;; GUI config ;;
 ;;;;;;;;;;;;;;;;
