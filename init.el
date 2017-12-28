@@ -424,11 +424,18 @@
   (add-hook 'go-mode-hook
             (lambda ()
               (local-set-key (kbd "M-.") 'godef-jump)
-              (local-set-key (kbd "C-c C-c d") 'godoc-at-point))))
+              (local-set-key (kbd "C-c C-c d") 'godoc-at-point)
+              (local-set-key (kbd "C-c t") 'go-tag-add)
+              (local-set-key (kbd "C-c T") 'go-tag-remove))))
 
 ;; gotest
 (use-package gotest
   :ensure t)
+
+;; go-tag
+(use-package go-tag
+  :ensure t
+  :config)
 
 ;; fill column indicator
 (use-package fill-column-indicator
