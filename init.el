@@ -26,7 +26,6 @@
 (eval-when-compile
   (require 'use-package))
 (require 'bind-key)
-(require 'diminish)
 
 ;;;;;;;;;;;;;;;;;;;
 ;; Common config ;;
@@ -149,6 +148,10 @@
 ;;;;;;;;;;;;;;;;;;;;;
 ;; Packages config ;;
 ;;;;;;;;;;;;;;;;;;;;;
+
+;; diminish
+(use-package diminish
+  :ensure t)
 
 ;; Uniquify style
 (use-package uniquify
@@ -672,6 +675,9 @@
   :ensure t
   :config
   (direnv-mode t))
+
+;; diminish
+(diminish 'auto-revert-mode)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
