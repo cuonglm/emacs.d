@@ -366,10 +366,11 @@
   (with-eval-after-load 'python (elpy-enable))
   :bind ("M-," . pop-tag-mark)
   :config
-  (elpy-use-ipython)
   (add-hook 'elpy-mode-hook
             (lambda ()
-              (local-set-key (kbd "C-c M-c") 'elpy-shell-switch-to-shell))))
+              (local-set-key (kbd "C-c M-c") 'elpy-shell-switch-to-shell)
+              (setq python-shell-interpreter "ipython"
+                    python-shell-interpreter-args "-i --simple-prompt"))))
 
 ;; jinja2
 (use-package jinja2-mode
