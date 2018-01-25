@@ -13,7 +13,7 @@ go:
 			     github.com/rogpeppe/godef \
 			     github.com/golang/lint/golint \
 			     golang.org/x/tools/cmd/goimports \
-			     golang.org/x/tools/cmd/oracle \
+			     golang.org/x/tools/cmd/guru \
 			     github.com/jstemmer/gotags
 
 pip:
