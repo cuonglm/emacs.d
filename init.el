@@ -186,6 +186,7 @@
 (use-package exec-path-from-shell
   :ensure t
   :config
+  (setq exec-path-from-shell-shell-name "zsh")
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-env "GOPATH"))
 
@@ -255,23 +256,23 @@
   :ensure t)
 
 ;; perl-completion
-(use-package perl-completion
-  :ensure t
-  :bind ("C-M-p" . plcmp-cmd-complete-all)
-  :config
-  (add-hook 'cperl-mode-hook
-            `(lambda()
-               (perl-completion-mode t)
-               (when (require 'auto-complete nil t) ; no error whatever auto-complete.el is not installed.
-                 (auto-complete-mode t)
-                 (make-local-variable 'ac-sources)
-                 (setq ac-sources '(ac-source-perl-completion)))
-               (setq cperl-indent-level 4
-                     cperl-close-paren-offset -4
-                     cperl-continued-statement-offset 4
-                     cperl-tab-always-indent t
-                     cperl-indent-parens-as-block t
-                     perl-indent-parens-as-block t))))
+;; (use-package perl-completion
+;;   :ensure t
+;;   :bind ("C-M-p" . plcmp-cmd-complete-all)
+;;   :config
+;;   (add-hook 'cperl-mode-hook
+;;             `(lambda()
+;;                (perl-completion-mode t)
+;;                (when (require 'auto-complete nil t) ; no error whatever auto-complete.el is not installed.
+;;                  (auto-complete-mode t)
+;;                  (make-local-variable 'ac-sources)
+;;                  (setq ac-sources '(ac-source-perl-completion)))
+;;                (setq cperl-indent-level 4
+;;                      cperl-close-paren-offset -4
+;;                      cperl-continued-statement-offset 4
+;;                      cperl-tab-always-indent t
+;;                      cperl-indent-parens-as-block t
+;;                      perl-indent-parens-as-block t))))
 
 ;; neo tree
 (use-package neotree
@@ -686,6 +687,15 @@
 
 ;; diminish
 (diminish 'auto-revert-mode)
+
+;; pipenv
+(use-package pipenv
+  :ensure t
+  :hook (python-mode . pipenv-mode)
+  :init
+  (setq
+   pipenv-projectile-after-switch-function
+   #'pipenv-projectile-after-switch-extended))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
