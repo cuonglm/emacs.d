@@ -507,11 +507,11 @@
         '(emacs-lisp-mode-hook
           ielm-mode-hook)))
 
-;; perspective
-(use-package perspective
-  :ensure t
-  :config
-  (persp-mode))
+;; ;; perspective
+;; (use-package perspective
+;;   :ensure t
+;;   :config
+;;   (persp-mode))
 
 ;; Perl6
 (use-package perl6-mode
