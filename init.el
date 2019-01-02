@@ -422,6 +422,7 @@
   :ensure t
   :config
   (setq gofmt-command "goimports")
+  (setq godoc-at-point-function #'godoc-gogetdoc)
   (add-hook 'before-save-hook 'gofmt-before-save)
   (add-hook 'go-mode-hook
             (lambda ()

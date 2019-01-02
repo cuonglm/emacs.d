@@ -14,6 +14,7 @@ go:
 			     github.com/golang/lint/golint \
 			     golang.org/x/tools/cmd/goimports \
 			     golang.org/x/tools/cmd/guru \
+				 github.com/zmb3/gogetdoc \
 			     github.com/jstemmer/gotags
 
 pip:
