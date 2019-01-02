@@ -225,7 +225,7 @@
   (add-hook 'go-mode-hook
             (lambda ()
               (flycheck-select-checker 'go-golint)
-              (setq flycheck-disabled-checkers '(go-build)))))
+              (setq flycheck-disabled-checkers '(go-build go-vet)))))
 
 ;; flycheck-checkbashisms
 (use-package flycheck-checkbashisms
