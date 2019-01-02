@@ -234,7 +234,7 @@
   (flycheck-checkbashisms-setup)
   (setq flycheck-checkbashisms-posix t))
 
-;; flycheck-per6
+;; flycheck-perl6
 (use-package flycheck-perl6
   :ensure t)
 
