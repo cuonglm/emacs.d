@@ -9,11 +9,10 @@ help:
 	@echo "  haskell     Install Haskell dependencies."
 
 go:
-	go get -v -u github.com/nsf/gocode \
+	go get -v -u github.com/mdempsky/gocode \
 			     github.com/rogpeppe/godef \
-			     github.com/golang/lint/golint \
-			     golang.org/x/tools/cmd/goimports \
-			     golang.org/x/tools/cmd/guru \
+			     golang.org/x/lint/golint \
+			     golang.org/x/tools/cmd/... \
 				 github.com/zmb3/gogetdoc \
 			     github.com/jstemmer/gotags
 
