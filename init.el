@@ -431,6 +431,11 @@
               (local-set-key (kbd "C-c t") 'go-tag-add)
               (local-set-key (kbd "C-c T") 'go-tag-remove))))
 
+;; go-guru
+(use-package go-guru
+  :ensure t
+  :demand t)
+
 ;; gotest
 (use-package gotest
   :ensure t)
