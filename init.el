@@ -298,7 +298,10 @@
 
 ;; magit
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config
+  (remove-hook 'server-switch-hook 'magit-commit-diff)
+  (setq vc-handled-backends (delq 'Git vc-handled-backends)))
 
 ;; company-go
 (use-package company-go
