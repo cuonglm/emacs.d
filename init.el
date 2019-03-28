@@ -299,6 +299,8 @@
 ;; magit
 (use-package magit
   :ensure t
+  :bind (("C-x g" . magit-status)
+         ("C-x M-g". magit-dispatch))
   :config
   (remove-hook 'server-switch-hook 'magit-commit-diff)
   (setq vc-handled-backends (delq 'Git vc-handled-backends)))
