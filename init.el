@@ -45,7 +45,7 @@
 
 ;; Enable clipboard
 (if (version< emacs-version "25.1")
-    (setq x-select-enable-clipboard t)
+    (setq select-enable-clipboard t)
   (setq select-enable-clipboard t))
 
 ;; cperl-mode is preferred to perl-mode
@@ -291,7 +291,7 @@
            ("C-c h m" . helm-man-woman)
            ("C-c p s a" . helm-projectile-ack)))
   (setq helm-M-x-fuzzy-match t)
-  (projectile-global-mode)
+  (projectile-mode)
   (setq projectile-completion-system 'helm)
   (helm-projectile-on)
   (setq projectile-enable-caching t))
@@ -467,6 +467,7 @@
     (puthash 'python-mode-hook 79 mode-config-hash)
     (puthash 'c-mode-hook 80 mode-config-hash)
     (puthash 'cperl-mode-hook 80 mode-config-hash)
+    (puthash 'go-mode-hook 80 mode-config-hash)
     (maphash (lambda (k v) (my/fci-config k v)) mode-config-hash)))
 
 ;; ws-butler
@@ -726,7 +727,6 @@
 (add-hook 'sh-mode-hook
           (lambda ()
             (setq sh-basic-offset 2)
-            (setq sh-indentation 2)
             (setq tab-width 2)
             (define-key sh-mode-map (kbd "RET") 'reindent-then-newline-and-indent)))
 
