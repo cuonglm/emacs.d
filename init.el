@@ -467,7 +467,6 @@
     (puthash 'python-mode-hook 79 mode-config-hash)
     (puthash 'c-mode-hook 80 mode-config-hash)
     (puthash 'cperl-mode-hook 80 mode-config-hash)
-    (puthash 'go-mode-hook 80 mode-config-hash)
     (maphash (lambda (k v) (my/fci-config k v)) mode-config-hash)))
 
 ;; ws-butler
