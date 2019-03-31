@@ -450,7 +450,6 @@
   :ensure t)
 
 ;; go-dlv
-;; gotest
 (use-package go-dlv
   :ensure t)
 
