@@ -447,8 +447,12 @@
 
 ;; go-tag
 (use-package go-tag
-  :ensure t
-  :config)
+  :ensure t)
+
+;; go-dlv
+;; gotest
+(use-package go-dlv
+  :ensure t)
 
 ;; fill column indicator
 (use-package fill-column-indicator
