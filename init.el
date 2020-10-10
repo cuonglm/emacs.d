@@ -45,7 +45,7 @@
 
 ;; Enable clipboard
 (if (version< emacs-version "25.1")
-    (setq select-enable-clipboard t)
+    (setq x-select-enable-clipboard t)
   (setq select-enable-clipboard t))
 
 ;; cperl-mode is preferred to perl-mode
