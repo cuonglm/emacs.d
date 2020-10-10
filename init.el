@@ -333,6 +333,10 @@
   :config
   (setq company-tern-meta-as-single-line t))
 
+;; company-coq
+(use-package company-coq
+  :ensure t)
+
 ;; company
 (use-package company
   :ensure t
@@ -347,6 +351,7 @@
           company-ansible
           company-jedi
           company-go
+          company-coq
           company-tern))
   ;; Workaround for working with fci-mode
   (defvar-local company-fci-mode-on-p nil)
@@ -720,6 +725,12 @@
       (indent-tabs-mode . nil)))
   (add-hook 'protobuf-mode-hook
     (lambda () (c-add-style "my-style" my-protobuf-style t))))
+
+;; Coq
+(use-package proof-general
+  :ensure t
+  :config
+  (add-hook 'coq-mode-hook #'company-coq-mode))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
