@@ -305,10 +305,6 @@
   (remove-hook 'server-switch-hook 'magit-commit-diff)
   (setq vc-handled-backends (delq 'Git vc-handled-backends)))
 
-;; company-go
-(use-package company-go
-  :ensure t)
-
 ;; company-jedi
 (use-package company-jedi
   :ensure t)
@@ -337,6 +333,10 @@
 (use-package company-coq
   :ensure t)
 
+(use-package company-lsp
+  :ensure t
+  :commands company-lsp)
+
 ;; company
 (use-package company
   :ensure t
@@ -350,7 +350,6 @@
         '(company-c-headers
           company-ansible
           company-jedi
-          company-go
           company-coq
           company-tern))
   ;; Workaround for working with fci-mode
@@ -430,16 +429,13 @@
 ;; go-mode
 (use-package go-mode
   :ensure t
-  :config
-  (setq gofmt-command "goimports")
-  (setq godoc-at-point-function #'godoc-gogetdoc)
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  (add-hook 'go-mode-hook
-            (lambda ()
-              (local-set-key (kbd "M-.") 'godef-jump)
-              (local-set-key (kbd "C-c C-c d") 'godoc-at-point)
-              (local-set-key (kbd "C-c t") 'go-tag-add)
-              (local-set-key (kbd "C-c T") 'go-tag-remove))))
+  :hook (progn
+          (go-mode . lsp-deferred))
+  :config (progn
+            (defun lsp-go-install-save-hooks ()
+              (add-hook 'before-save-hook #'lsp-format-buffer t t)
+              (add-hook 'before-save-hook #'lsp-organize-imports t t))
+            (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)))
 
 ;; go-guru
 (use-package go-guru
@@ -731,6 +727,24 @@
   :ensure t
   :config
   (add-hook 'coq-mode-hook #'company-coq-mode))
+
+;; lsp-mode
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (go-mode . lsp-deferred)
+  :config (progn
+            (setq lsp-prefer-flymake nil)
+            (lsp-register-custom-settings
+              '(("gopls.completeUnimported" t t)
+                ("gopls.usePlaceholders" t t)))))
+
+;; lsp-ui
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode
+  :config (progn
+            (setq lsp-ui-sideline-enable nil)))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hook Functions ;;
