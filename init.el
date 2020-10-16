@@ -725,8 +725,9 @@
 ;; Coq
 (use-package proof-general
   :ensure t
-  :config
-  (add-hook 'coq-mode-hook #'company-coq-mode))
+  :config (progn
+            (setq coq-compile-before-require t)
+            (add-hook 'coq-mode-hook #'company-coq-mode)))
 
 ;; lsp-mode
 (use-package lsp-mode
