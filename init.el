@@ -31,6 +31,8 @@
 ;; Common config ;;
 ;;;;;;;;;;;;;;;;;;;
 
+(desktop-save-mode t)
+
 ;; Store all backup and autosave files in the tmp dir
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
