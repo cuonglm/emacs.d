@@ -9,12 +9,7 @@ help:
 	@echo "  haskell     Install Haskell dependencies."
 
 go:
-	go get -v -u github.com/mdempsky/gocode \
-			     github.com/rogpeppe/godef \
-			     golang.org/x/lint/golint \
-			     golang.org/x/tools/cmd/... \
-				 github.com/zmb3/gogetdoc \
-			     github.com/jstemmer/gotags
+	go get golang.org/x/tools/gopls@latest
 
 pip:
 	easy_install pip && \
