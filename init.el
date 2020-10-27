@@ -339,6 +339,9 @@
   :ensure t
   :commands company-lsp)
 
+(use-package company-lua
+  :ensure t)
+
 ;; company
 (use-package company
   :ensure t
@@ -353,6 +356,7 @@
           company-ansible
           company-jedi
           company-coq
+          company-lua
           company-tern))
   ;; Workaround for working with fci-mode
   (defvar-local company-fci-mode-on-p nil)
