@@ -57,4 +57,5 @@ js:
 	npm install -g tern
 
 rust:
-	cargo install racer rustfmt
+	cargo install rustfmt
+	printf '%s\n' 'Install rust-analyzer follow instruction at: https://rust-analyzer.github.io/manual.html#installation'

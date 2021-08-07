@@ -13,7 +13,6 @@
 ;; package.el for packages manager
 (require 'package)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")
                          ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("elpy" . "https://jorgenschaefer.github.io/packages/")))
@@ -192,8 +191,8 @@
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-env "GOPATH"))
 
-;; anything
-(use-package anything
+;; helm
+(use-package helm
   :ensure t)
 
 ;; Use Solarized theme
@@ -218,9 +217,9 @@
           c++-mode-hook
           emacs-lisp-mode-hook
           php-mode-hook
-          perl6-mode-hook
+          raku-mode-hook
           lua-mode-hook
-          rust-mode-hook))
+          rustic-mode-hook))
   (add-hook 'sh-mode-hook
             (lambda ()
               (flycheck-select-checker 'sh-shellcheck)))
@@ -236,8 +235,8 @@
   (flycheck-checkbashisms-setup)
   (setq flycheck-checkbashisms-posix t))
 
-;; flycheck-perl6
-(use-package flycheck-perl6
+;; flycheck-raku
+(use-package flycheck-raku
   :ensure t)
 
 ;; flycheck-rust
@@ -252,10 +251,6 @@
   :diminish undo-tree-mode
   :config
   (global-undo-tree-mode))
-
-;; ack
-(use-package ack-and-a-half
-  :ensure t)
 
 ;; perl-completion
 ;; (use-package perl-completion
@@ -319,25 +314,9 @@
 (use-package company-c-headers
   :ensure t)
 
-;; company-ghc
-(use-package company-ghc
-  :ensure t
-  :config
-  (custom-set-variables '(company-ghc-show-info t)))
-
-;; company-tern
-(use-package company-tern
-  :ensure t
-  :config
-  (setq company-tern-meta-as-single-line t))
-
 ;; company-coq
 (use-package company-coq
   :ensure t)
-
-(use-package company-lsp
-  :ensure t
-  :commands company-lsp)
 
 (use-package company-lua
   :ensure t)
@@ -349,15 +328,13 @@
   :bind ("M-/" . company-complete-common)
   :config
   (add-hook 'after-init-hook 'global-company-mode)
-  (add-to-list 'company-backends '(company-ghc :with company-dabbrev-code))
   (mapc (lambda (pkg)
           (add-to-list 'company-backends pkg))
         '(company-c-headers
           company-ansible
           company-jedi
           company-coq
-          company-lua
-          company-tern))
+          company-lua))
   ;; Workaround for working with fci-mode
   (defvar-local company-fci-mode-on-p nil)
 
@@ -464,6 +441,7 @@
 (use-package fill-column-indicator
   :ensure t
   :config
+  (eval-when-compile (require 'cl))
   (setq fci-rule-color "LightSlateBlue")
   (setq fci-handle-truncate-lines t)
   (defun my/fci-config (mode num)
@@ -491,27 +469,10 @@
           yaml-mode-hook
           jinja2-mode-hook)))
 
-;; markdown-mode
-(use-package markdown-mode
-  :ensure t
-  :pin marmalade
-  :mode "\\.md\\'"
-  :config
-  (add-hook 'markdown-mode-hook
-            (lambda ()
-              (when buffer-file-name
-                (add-hook 'after-save-hook
-                          'check-parens
-                          nil t)))))
-
 ;; comment-dwim-2
 (use-package comment-dwim-2
   :ensure t
   :bind ("M-;" . comment-dwim-2))
-
-;; xlicense
-(use-package xlicense
-  :ensure t)
 
 ;; web-mode
 (use-package web-mode
@@ -528,15 +489,10 @@
         '(emacs-lisp-mode-hook
           ielm-mode-hook)))
 
-;; perspective
-(use-package perspective
+;; Raku
+(use-package raku-mode
   :ensure t
-  :config
-  (persp-mode))
-
-;; Perl6
-(use-package perl6-mode
-  :ensure t)
+  :defer t)
 
 ;; helm-c-yasnippet
 (use-package helm-c-yasnippet
@@ -580,14 +536,6 @@
    '(haskell-process-auto-import-loaded-modules t)
    '(haskell-process-log t)
    '(haskell-process-type 'cabal-repl)))
-
-;; ghc
-(use-package ghc
-  :ensure t
-  :config
-  (autoload 'ghc-init "ghc" nil t)
-  (autoload 'ghc-debug "ghc" nil t)
-  (add-hook 'haskell-mode-hook (lambda () (ghc-init))))
 
 ;; shm
 (use-package shm
@@ -678,27 +626,33 @@
   (setq ag-highlight-search t)
   (setq ag-reuse-buffers 't))
 
-;; ensime
-(use-package ensime
-  :ensure t
-  :commands ensime ensime-mode
+;; rustic
+(use-package rustic
+  :ensure
+  :bind (:map rustic-mode-map
+              ("M-j" . lsp-ui-imenu)
+              ("M-?" . lsp-find-references)
+              ("C-c C-c l" . flycheck-list-errors)
+              ("C-c C-c a" . lsp-execute-code-action)
+              ("C-c C-c r" . lsp-rename)
+              ("C-c C-c q" . lsp-workspace-restart)
+              ("C-c C-c Q" . lsp-workspace-shutdown)
+              ("C-c C-c s" . lsp-rust-analyzer-status))
   :config
-  (add-hook 'scala-mode-hook 'ensime-mode))
+  ;; uncomment for less flashiness
+  ;; (setq lsp-eldoc-hook nil)
+  ;; (setq lsp-enable-symbol-highlighting nil)
+  ;; (setq lsp-signature-auto-activate nil)
+  (setq rustic-format-on-save t)
+  (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
 
-;; rust-mode
-(use-package rust-mode
-  :ensure t
-  :config
-  (add-hook 'rust-mode-hook 'racer-mode)
-  (add-hook 'racer-mode-hook 'eldoc-mode))
-
-;; racer-mode
-(use-package racer
-  :ensure t
-  :bind ("C-c C-c d" . racer-describe)
-  :config
-  (setq racer-rust-src-path (expand-file-name "~/sources/rust/src/"))
-  (add-hook 'racer-mode-hook 'company-mode))
+(defun rk/rustic-mode-hook ()
+  ;; so that run C-c C-c C-r works without having to confirm, but don't try to
+  ;; save rust buffers that are not file visiting. Once
+  ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
+  ;; no longer be necessary.
+  (when buffer-file-name
+    (setq-local buffer-save-without-query t)))
 
 ;; direnv
 (use-package direnv
@@ -740,8 +694,15 @@
   :ensure t
   :commands (lsp lsp-deferred)
   :hook (go-mode . lsp-deferred)
+  :custom
+  (lsp-rust-analyzer-cargo-watch-command "clippy")
+  (lsp-eldoc-render-all t)
+  (lsp-idle-delay 0.6)
+  (lsp-rust-analyzer-server-display-inlay-hints t)
   :config (progn
             (setq lsp-prefer-flymake nil)
+            (setq lsp-rust-server 'rust-analyzer)
+            (add-hook 'lsp-mode-hook 'lsp-ui-mode)
             (lsp-register-custom-settings
               '(("gopls.completeUnimported" t t)
                 ("gopls.usePlaceholders" t t)))))
@@ -750,6 +711,10 @@
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
+  :custom
+  (lsp-ui-peek-always-show t)
+  (lsp-ui-sideline-show-hover t)
+  (lsp-ui-doc-enable nil)
   :config (progn
             (setq lsp-ui-sideline-enable nil)))
 
