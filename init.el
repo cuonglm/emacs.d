@@ -193,7 +193,27 @@
 
 ;; helm
 (use-package helm
-  :ensure t)
+  :ensure t
+  :config (progn
+            (setq  helm-gtags-ignore-case t)
+            (setq  helm-gtags-auto-update t)
+            (setq  helm-gtags-use-input-at-cursor t)
+            (setq  helm-gtags-pulse-at-cursor t)
+            (setq  helm-gtags-prefix-key "\C-cg")
+            (setq  helm-gtags-suggested-key-mapping t)))
+
+(use-package helm-gtags
+  :ensure t
+  :config (progn
+            (add-hook 'c-mode-hook 'helm-gtags-mode)
+            (add-hook 'c++-mode-hook 'helm-gtags-mode)
+            (add-hook 'asm-mode-hook 'helm-gtags-mode)
+            (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+            (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+            (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+            (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+            (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
+            (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)))
 
 ;; Use Solarized theme
 (use-package solarized-theme
@@ -326,29 +346,29 @@
   :ensure t
   :diminish company-mode
   :bind ("M-/" . company-complete-common)
-  :config
-  (add-hook 'after-init-hook 'global-company-mode)
-  (mapc (lambda (pkg)
-          (add-to-list 'company-backends pkg))
-        '(company-c-headers
-          company-ansible
-          company-jedi
-          company-coq
-          company-lua))
-  ;; Workaround for working with fci-mode
-  (defvar-local company-fci-mode-on-p nil)
+  :config (progn
+            (add-hook 'after-init-hook 'global-company-mode)
+            (mapc (lambda (pkg)
+                    (add-to-list 'company-backends pkg))
+                      '(company-c-headers
+                        company-ansible
+                        company-jedi
+                        company-coq
+                        company-lua))
+            ;; Workaround for working with fci-mode
+            (defvar-local company-fci-mode-on-p nil)
 
-  (defun my/company-turn-off-fci (&rest ignore)
-    (when (boundp 'fci-mode)
-      (setq company-fci-mode-on-p fci-mode)
-      (when fci-mode (fci-mode -1))))
+            (defun my/company-turn-off-fci (&rest ignore)
+              (when (boundp 'fci-mode)
+                (setq company-fci-mode-on-p fci-mode)
+                (when fci-mode (fci-mode -1))))
 
-  (defun my/company-maybe-turn-on-fci (&rest ignore)
-    (when company-fci-mode-on-p (fci-mode 1)))
+            (defun my/company-maybe-turn-on-fci (&rest ignore)
+              (when company-fci-mode-on-p (fci-mode 1)))
 
-  (add-hook 'company-completion-started-hook 'my/company-turn-off-fci)
-  (add-hook 'company-completion-finished-hook 'my/company-maybe-turn-on-fci)
-  (add-hook 'company-completion-cancelled-hook 'my/company-maybe-turn-on-fci))
+            (add-hook 'company-completion-started-hook 'my/company-turn-off-fci)
+            (add-hook 'company-completion-finished-hook 'my/company-maybe-turn-on-fci)
+            (add-hook 'company-completion-cancelled-hook 'my/company-maybe-turn-on-fci)))
 
 ;; elpy
 (use-package elpy
